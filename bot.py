@@ -211,8 +211,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         ticker = yf.Ticker(f"{symbol}.NS")
 
-        info = ticker.info
-        company_name = info.get("longName", symbol)
+        # SAFE FIX ONLY
+        company_name = symbol
+        try:
+            info = ticker.info
+            company_name = info.get("longName", symbol)
+        except:
+            pass
 
         daily_data = ticker.history(period="6mo", interval="1d")
 
