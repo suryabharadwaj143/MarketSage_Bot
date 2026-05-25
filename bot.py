@@ -213,8 +213,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # SAFE FIX ONLY
         company_name = symbol
+
         try:
-            info = ticker.info
+            fast_info = ticker.fast_info
+        except:
+            pass
+            
+        try:
+            info = ticker.get_info()
             company_name = info.get("longName", symbol)
         except:
             pass
